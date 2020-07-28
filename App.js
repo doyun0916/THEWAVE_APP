@@ -7,9 +7,30 @@
  */
 
 import React from 'react';
-import { StyleSheet, View, Text, Image, ImageBackground, TouchableOpacity, TextInput, TouchableHighlight } from 'react-native';
+import { StyleSheet, View, Text, Image, ImageBackground, TouchableOpacity, TextInput } from 'react-native';
 
 class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+        focusId: false,
+        focusPw: false
+    };
+  }
+
+  focusId = () => {
+    this.setState({ focusId: true});
+  }
+  focusPw = () => {
+      this.setState({ focusPw: true });
+    }
+  unfocusedId = () => {
+    this.setState({ focusId: false });
+  }
+  unfocusedPw = () => {
+      this.setState({ focusPw: false});
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -19,8 +40,8 @@ class App extends React.Component {
             <Image style={{width: "45%", height: "45%", resizeMode: 'contain', borderRadius:100 }} source={require('./icon/logo.png')}/>
           </View>
           <View style={styles.login}>
-            <TextInput placeholder='ID' style={styles.id} />
-            <TextInput placeholder='PASSWORD' style={styles.pw} />
+            <TextInput placeholder='ID' onFocus={this.focusId} onBlur={this.unfocusedId} style={this.state.focusId ? styles.idp : styles.id} />
+            <TextInput placeholder='PASSWORD' secureTextEntry={true} onFocus={this.focusPw} onBlur={this.unfocusedPw} style={this.state.focusPw ? styles.pwp : styles.pw} />
             <TouchableOpacity style={styles.login_bt}>
               <ImageBackground source={require('./icon/background.jpg')} imageStyle={{borderRadius: 30}} style={styles.bgImage}>
                 <Text style={styles.login_char}>로그인</Text>
@@ -74,6 +95,18 @@ const styles = StyleSheet.create({
     borderColor: 'lightgray',
     paddingLeft: 15
   },
+  idp: {
+      marginTop: 20,
+      width: 270,
+      height: 40,
+      justifyContent: 'center',
+      alignItems: 'center',
+      backgroundColor: 'white',
+      borderRadius: 30,
+      borderWidth: 2.5,
+      borderColor: '#40e0d0',
+      paddingLeft: 15
+    },
   pw: {
     marginTop: 5,
     width: 270,
@@ -86,6 +119,18 @@ const styles = StyleSheet.create({
     borderColor: 'lightgray',
     paddingLeft: 15
   },
+  pwp: {
+      marginTop: 5,
+      width: 270,
+      height: 40,
+      justifyContent: 'center',
+      alignItems: 'center',
+      backgroundColor: 'white',
+      borderRadius: 30,
+      borderWidth: 2.5,
+      borderColor: '#40e0d0',
+      paddingLeft: 15
+    },
   login_bt: {
     marginTop: 30,
     width: 270,
